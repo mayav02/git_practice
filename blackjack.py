@@ -38,7 +38,9 @@ class Card:
         13: "K"
     }
 
-    def __init__(self):
+    def __init__(self, suit, val):
+        self.suit = suit
+        self.value = val
         pass
 
     def __str__(self):
@@ -58,6 +60,7 @@ from deck import Deck
 from hand import Hand
 
 class Game:
+
     MINIMUM_BET = 1
 
     def __init__(self, player, dealer):
@@ -66,7 +69,18 @@ class Game:
         self.bet = None
         self.deck = Deck()
 
+        print("Welcome to Blackjack!")
+        player = input("You are starting with $500. Would you like to play a hand? ")
+        while player == 'yes':
+            bet = int(input("Place your bet: "))
+            if bet < 1:
+                print("The minimum is $1. ")
+            else:
+                break
+        return bet
+
     def start_game(self):
+        random.shuffle(Deck)
         pass
 
 class Hand:
@@ -88,3 +102,6 @@ class Player:
 
     def get_str_hand(self):
         pass
+
+
+Game(Player, Dealer)
