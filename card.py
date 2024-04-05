@@ -1,5 +1,3 @@
-import random
-
 class Card:
     SUIT_SYMBOLS = {
         0: u"\u2666",  # diamonds
@@ -23,3 +21,9 @@ class Card:
         12: "Q",
         13: "K"
     }
+
+    def __init__(self):
+        pass
+
+    def __str__(self):
+        pass
