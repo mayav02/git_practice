@@ -7,7 +7,6 @@ class Card:
 
     def show(self):
         print("{} of {}".format(self.value, self.suit))
-        # ^ this was printed out!
 
 class Deck:
     def __init__(self):
@@ -32,53 +31,47 @@ class Deck:
     def drawCard(self):
         return self.cards.pop()
     
+bank = 500
+min_bet = 1
 
-print("Welcome to Blackjack!")    
-player = input("You are starting with $500. Would you like to play a hand? ")
-if player == 'yes':
-    bet = int(input("Place your bet: "))
-    if bet < 1:
-        print("The minimum is $1. ")
-    if bet >= 1:
-        deck = Deck()
-        deck.build()
-        deck.shuffle()
-        for _ in range(1):
-            print("You are dealt: ")
-            for _ in range(2):
-                deck.drawCard()
-                deck.show()
-        for _ in range(1):
-            print("The dealer is dealt: " )
+while bank >= 500:
+    print("Welcome to Blackjack!")    
+    player = input(f"You are starting with ${bank}. Would you like to play a hand? ")
+    if player == 'yes' and bank > 0:
+        bet = int(input("Place your bet: "))
+        if bet < min_bet:
+            print("The minimum is $1. ")
+        if bet >= min_bet:
+            bank =- bet
+            deck = Deck()
+            deck.build()
+            deck.shuffle()
             for _ in range(1):
-                deck.drawCard()
-                deck.show()
-                print("Unknown")
-        print("Would you like to hit or stay?")
+                print("You are dealt: ")
+                for _ in range(2):
+                    deck.drawCard()
+                    deck.show()
+            for _ in range(1):
+                print("The dealer is dealt: " )
+                for _ in range(1):
+                    deck.drawCard()
+                    deck.show()
+                    print("Unknown")
+            first_hit_or_stay = input("Would you like to hit or stay?")
+            if first_hit_or_stay == 'hit':
+                    for _ in range(1):
+                        print("You are dealt: ")
+                        for _ in range(2):
+                            deck.drawCard()
+                            deck.show()
+            if first_hit_or_stay == 'stay':
+                for _ in range(1):
+                    print("The dealer is dealt: " )
+                    for _ in range(1):
+                        for _ in range(2):
+                            deck.drawCard()
+                            deck.show()
                 
+    if player == 'no':
+        print("Okay byeeeee!")
         
-
-else:
-    print("Okay byeeeee!")
-        
-'''
-class Card:
-  def __init__(self, suit, rank):
-    self.suit = suitåå
-    self.rank = rank
-
-class Deck:
-  def __init__(self):
-    self.cards = []
-    for suit in ["Hearts", "Diamonds", "Clubs", "Spades"]:
-      for rank in ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]:
-        self.cards.append(Card(suit, rank))
-
-  def shuffle(self):
-    random.shuffle(self.cards)
-    ##print("dealer is: ", dealer)
-    ##return dealer
-
-  def draw(self):
-    return self.cards.pop()
-'''
