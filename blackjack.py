@@ -7,6 +7,7 @@ class Card:
 
     def show(self):
         print("{} of {}".format(self.value, self.suit))
+        # ^ this was printed out!
 
 class Deck:
     def __init__(self):
@@ -19,17 +20,19 @@ class Deck:
                 self.cards.append(Card(s,v))
 
     def show(self):
-        for c in self.cards:
-            c.show()
-
+        dealers_choice = random.choice(self.cards)
+        dealers_choice.show()
+    
     def shuffle(self):
         for i in range(len(self.cards) -1, 0, -1):
             r = random.randint(0, i)
             self.cards[i], self.cards[r] = self.cards[r], self.cards[i]
 
+
     def drawCard(self):
         return self.cards.pop()
-  
+    
+
 print("Welcome to Blackjack!")    
 player = input("You are starting with $500. Would you like to play a hand? ")
 if player == 'yes':
@@ -38,14 +41,30 @@ if player == 'yes':
         print("The minimum is $1. ")
     if bet >= 1:
         deck = Deck()
+        deck.build()
         deck.shuffle()
-        dealt_player = random.choice## THIS IS THE ISSUE!!: (deck.cards)
-        print("Card = ", dealt_player)
+        for _ in range(1):
+            print("You are dealt: ")
+            for _ in range(2):
+                deck.drawCard()
+                deck.show()
+        for _ in range(1):
+            print("The dealer is dealt: " )
+            for _ in range(1):
+                deck.drawCard()
+                deck.show()
+                print("Unknown")
+        print("Would you like to hit or stay?")
+                
+        
+
+else:
+    print("Okay byeeeee!")
         
 '''
 class Card:
   def __init__(self, suit, rank):
-    self.suit = suit
+    self.suit = suitåå
     self.rank = rank
 
 class Deck:
