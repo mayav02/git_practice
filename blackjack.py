@@ -35,7 +35,6 @@ class Deck:
             r = random.randint(0, i)
             self.cards[i], self.cards[r] = self.cards[r], self.cards[i]
 
-
     def drawCard(self):
         return self.cards.pop()
     
@@ -44,18 +43,19 @@ class Play:
         self.bank = 500
         self.min_bet = 1
 
-    def play_black(self):
+    def play_blackjack(self):
         while self.bank >= 500:
             print("Welcome to Blackjack!")    
-            player = input(f"You are starting with ${bank}. Would you like to play a hand? ")
-            if player == 'yes' and bank > 0:
+            player = input(f"You are starting with ${self.bank}. Would you like to play a hand? ")
+
+            if player == 'yes' and self.bank > 0:
                 bet = int(input("Place your bet: "))
                 if bet < self.min_bet:
                     print("The minimum is $1. ")
-                if bet > self.mbank:
+                if bet > self.bank:
                     print("You don't have enough money for that bet.")
                 else:
-                    bank -= bet
+                    bank =- bet
                     # Creating an instance of the class.
                     deck = Deck()
                     deck.shuffle()
@@ -66,44 +66,51 @@ class Play:
                         player_hand.append(deck.drawCard())
                         dealer_hand.append(deck.drawCard())
 
-
-                        player_total = sum(card.blackjack_value() for card in player_hand)
-                        print("You are dealt: ")
-                        for card in player_hand:
-                            card.show()
-                        print("Total value of your hand:", player_total)
+                    player_total = sum(card.blackjack_value() for card in player_hand)
+                    print("You are dealt: ")
+                    for card in player_hand:
+                        card.show()
+                    print("Total value of your hand:", player_total)
                     
                     dealer_total = sum(card.blackjack_value() for card in dealer_hand)
                     print("Dealer's cards:")
                     dealer_hand[0].show()
                     print("Unknown")
-                    print("Total value of dealer's hand:", dealer_hand[0].blackjack_value())
-
+                    print("The dealer is dealt: " )
                     for _ in range(1):
-                        print("The dealer is dealt: " )
-                        for _ in range(1):
-                            deck.drawCard()
-                            deck.show()
-                            print("Unknown")
-                    first_hit_or_stay = input("Would you like to hit or stay?")
+                        deck.drawCard()
+                        deck.show()
+                    print("Total value of dealer's hand:", dealer_hand[0].blackjack_value())
+                
+                    first_hit_or_stay = input("Would you like to hit or stay? ")
+
                     if first_hit_or_stay == 'hit':
                             for _ in range(1):
                                 print("You are dealt: ")
                                 for _ in range(1):
                                     deck.drawCard()
-                                deck.show()
-                            for _ in range(2):
-                                print("The dealer is dealt: " )
-                                for _ in range(1):
-                                    deck.drawCard()
                                     deck.show()
+                                player_hand.append(deck.drawCard())
+                                print("You now have ", player_hand)
+                    # STOPPED RIGHT HERE!
                     if first_hit_or_stay == 'stay':
-                        print("locked")
-                    deck.drawCard()
-                    deck.show()
-
+                        print("Your hand is now locked.")
+                        for _ in range(2):
+                            print("The dealer is dealt: " )
+                            for _ in range(1):
+                                deck.drawCard()
+                                deck.show()
+                        dealer_hand.append(deck.drawCard())    
+                    if dealer_total <= 16:
+                        deck.drawCard()
+                        dealer_hand.append(deck.drawCard())
+                        while dealer_total > 17:
+                            print("Dealer will hit")
+                            deck.drawCard()
+                            dealer_hand.append(deck.drawCard())
             if player == 'no':
                 print("Okay byeeeee!")
 
-Play()
+game = Play()
+game.play_blackjack()
         
