@@ -87,6 +87,7 @@ class Play:
                             card = deck.drawCard()
                             print("{} of {}  ".format(card.value, card.suit), end="")
                             player_hand.append(card)
+                            player_total = sum(card.blackjack_value() for card in player_hand)
                             print("\nYou now have: ", end="")
                             for card in player_hand:
                                 print("{} of {}  ".format(card.value, card.suit), end="")
@@ -101,6 +102,7 @@ class Play:
                         print("\nThe dealers face down card was: ", end="")
                         card = deck.drawCard()
                         dealer_hand.append(card)
+                        dealer_total = sum(card.blackjack_value() for card in dealer_hand)
                         print("{} of {}  ".format(card.value, card.suit), end="")
                         print("\nAll of dealer's cards:", end="")
                         for card in dealer_hand:
@@ -112,6 +114,7 @@ class Play:
                             print(" ")
                             print("\nDealer will hit: {} of {}  ".format(card.value, card.suit))
                             dealer_hand.append(card)
+                            dealer_total = sum(card.blackjack_value() for card in dealer_hand)
                             print("Dealer's total: ", dealer_total)
                         if dealer_total > 17:
                                 print("The dealer will hit: ", end="")
