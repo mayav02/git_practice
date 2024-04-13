@@ -18,4 +18,10 @@ class Deck:
 
   def draw(self):
     return self.cards.pop()
+
+#!
+    print("The dealer is dealt: " )
+                    for _ in range(1):
+                        deck.drawCard()
+                        deck.show()
 '''
