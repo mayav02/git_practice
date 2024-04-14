@@ -94,12 +94,13 @@ class Play:
                                 print("\nYour total is: ", player_total)
                                 print(" ")
                                 player_total = sum(card.blackjack_value() for card in player_hand)
-                    if player_total >= 21:
-                        print("BUST! You have gone over 21. Play Again!")
-                        break
-                    elif first_hit_or_stay == 'stay':
-                        print("Your hand is now locked.")
-                        exit
+                        if player_total >= 21:
+                            print(f"BUST! You have gone over 21 and you lose {self.bank}. Play Again!")
+                            break
+                        elif first_hit_or_stay == 'stay':
+                            print("Your hand is now locked.")
+                            break
+                        
                     while dealer_total < 17:
                         print("\nThe dealers face down card was: ", end="")
                         card = deck.drawCard()
