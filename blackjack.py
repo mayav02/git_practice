@@ -78,7 +78,8 @@ class Play:
                     # print("{} of {}  ".format(dealer_hand[0].value, dealer_hand[0].suit), end="")
                     # print("Unknown")
                     print("\nTotal value of dealer's hand:", dealer_total)
-                    while player_total < 21:    
+                    # This needs to not be a while loop
+                    while True:    
                         first_hit_or_stay = input("\nWould you like to hit or stay? ")
                         player_total = sum(card.blackjack_value() for card in player_hand)
                         if first_hit_or_stay == 'hit': 
@@ -94,39 +95,43 @@ class Play:
                                 print("\nYour total is: ", player_total)
                                 print(" ")
                                 player_total = sum(card.blackjack_value() for card in player_hand)
-                        if player_total >= 21:
-                            print(f"BUST! You have gone over 21 and you lose {self.bank}. Play Again!")
-                            exit
-                        if first_hit_or_stay == 'stay':
+                            if player_total >= 21:
+                                print(f"BUST! You have gone over 21 and you lose {self.bank}. Play Again!")
+                                exit
+                        elif first_hit_or_stay == 'stay':
                             print("Your hand is now locked.")
-                            print("\nThe dealers face down card was: ", end="")
-                            card = deck.drawCard()
+                            break
+                    print("\nThe dealers face down card was: ", end="")
+                    card = deck.drawCard()
+                    dealer_hand.append(card)
+                    dealer_total = sum(card.blackjack_value() for card in dealer_hand)
+                    print("{} of {}  ".format(card.value, card.suit), end="")
+                    print("\nAll of dealer's cards: ", end="")
+                    for card in dealer_hand:
+                        print("{} of {}  ".format(card.value, card.suit), end="")
+                        ##print("\nTotal value of dealer's hand:", dealer_total)
+                    dealer_total = sum(card.blackjack_value() for card in dealer_hand)
+                    while True:
+                        if dealer_total >= 17:
+                            print("The dealer will stay")
+                            '''
+                            card = deck.drawCard()  # Draw one card for the dealer
+                            print("\nDealer will hit: {} of {}  ".format(card.value, card.suit))
                             dealer_hand.append(card)
                             dealer_total = sum(card.blackjack_value() for card in dealer_hand)
+                            print("Dealer's total: ", dealer_total)
+                            '''
+                        elif dealer_total <= 16:
+                            print("\nThe dealer will hit and is dealt: ", end="")
+                            card = deck.drawCard()
                             print("{} of {}  ".format(card.value, card.suit), end="")
-                            print("\nAll of dealer's cards:", end="")
-                            for card in dealer_hand:
-                                print("{} of {}  ".format(card.value, card.suit), end="")
-                                ##print("\nTotal value of dealer's hand:", dealer_total)
-                            if dealer_total >= 17:
-                                deck.drawCard()
-                                card = deck.drawCard()
-                                print(" ")
-                                print("\nDealer will hit: {} of {}  ".format(card.value, card.suit))
-                                dealer_hand.append(card)
-                                dealer_total = sum(card.blackjack_value() for card in dealer_hand)
-                                print("Dealer's total: ", dealer_total)
-                            elif dealer_total > 17:
-                                print("The dealer will hit: ", end="")
-                                card = deck.drawCard()
-                                print("{} of {}  ".format(card.value, card.suit), end="")
-                                dealer_hand.append(card)
-                                dealer_total = sum(card.blackjack_value() for card in dealer_hand)
-                            if dealer_total >= 21:
-                                print("You won! The dealer has gone over 21. Play again!")
-            
+                            dealer_hand.append(card)
+                            dealer_total = sum(card.blackjack_value() for card in dealer_hand)
+                        if dealer_total >= 21:
+                            print("'\nYou won! The dealer has gone over 21. Play again!")   
+                            exit            
             if player == 'no':
-                print("Okay byeeeee!")
+                print("Okay byeeeee!")    
 
 game = Play()
 game.play_blackjack()
